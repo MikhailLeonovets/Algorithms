@@ -9,7 +9,7 @@ public interface ArraysAlgorithm {
      * Proceed needed algorithm
      *
      * @param incomingData incoming array to be calculated
-     * @return array which is calculated (maybe sorted by the needed login)
+     * @return array which is calculated (maybe sorted by the needed logic)
      */
     int[] calculate(final int[] incomingData);
 
