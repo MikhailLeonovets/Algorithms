@@ -4,15 +4,12 @@ import com.leonovets.algorithms.service.ArraysAlgorithm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.util.Assert;
-
-import java.util.Arrays;
 
 /**
  * @author Mikhail.Leonovets
- * @since 03/06/2023 - 13:49
+ * @since 03/07/2023 - 15:32
  */
-class BubbleSortAlgorithmTest {
+class MergeSortAlgorithmTest {
     private int[] givenRandomArray;
     private int[] givenArrayWithNegativeArray;
     private int[] givenSortedArray;
@@ -21,8 +18,7 @@ class BubbleSortAlgorithmTest {
     private int[] expectedArrayFromNegativeArray;
     private int[] expectedArrayFromSortedArray;
 
-    private ArraysAlgorithm arraysAlgorithm;
-
+    private ArraysAlgorithm mergeSortAlgorithm;
 
     @BeforeEach
     void setUp() {
@@ -34,14 +30,14 @@ class BubbleSortAlgorithmTest {
         expectedArrayFromNegativeArray = new int[]{ -137487, -347, -10, 0, 0, 17, 24, 45, 114, 478, };
         expectedArrayFromSortedArray = new int[]{ -344, -24, -10, 0, 0, 45, 347, 478, 1700, 137487 };
 
-        arraysAlgorithm = new BubbleSortAlgorithm();
+        mergeSortAlgorithm = new MergeSortAlgorithm();
     }
 
     @Test
     void testCalculateRandomArray() {
         // given
         // when
-        final int[] actualResultFromRandomArray = arraysAlgorithm.calculate(givenRandomArray);
+        final int[] actualResultFromRandomArray = mergeSortAlgorithm.calculate(givenRandomArray);
 
         // then
         Assertions.assertArrayEquals(expectedFromRandomArray, actualResultFromRandomArray);
@@ -51,7 +47,7 @@ class BubbleSortAlgorithmTest {
     void testCalculateArrayWithNegativeArray() {
         // given
         // when
-        final int[] actualResultArrayWithNegativeArray = arraysAlgorithm.calculate(givenArrayWithNegativeArray);
+        final int[] actualResultArrayWithNegativeArray = mergeSortAlgorithm.calculate(givenArrayWithNegativeArray);
 
         // then
         Assertions.assertArrayEquals(expectedArrayFromNegativeArray, actualResultArrayWithNegativeArray);
@@ -61,7 +57,7 @@ class BubbleSortAlgorithmTest {
     void testCalculateSortedArray() {
         // given
         // when
-        final int[] actualResultFromSortedArray = arraysAlgorithm.calculate(givenSortedArray);
+        final int[] actualResultFromSortedArray = mergeSortAlgorithm.calculate(givenSortedArray);
 
         // then
         Assertions.assertArrayEquals(expectedArrayFromSortedArray, actualResultFromSortedArray);
