@@ -2,7 +2,6 @@ package com.leonovets.algorithms.service.impl;
 
 import com.leonovets.algorithms.service.ArraysAlgorithm;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.Arrays;
 
@@ -20,7 +19,7 @@ public class MergeSortAlgorithm implements ArraysAlgorithm {
         }
 
         final int[] array = Arrays.copyOf(incomingData, incomingData.length);
-        sort(array, 0, array.length - 1);
+        sort(array);
         return array;
     }
 
@@ -28,57 +27,61 @@ public class MergeSortAlgorithm implements ArraysAlgorithm {
      * Merges two sub-arrays from incoming array
      *
      * @param array       is incoming array which contains sub-arrays
-     * @param leftIndex   is left element index in the array to be merged
-     * @param middleIndex is middle element index between two sub-arrays in the array
-     * @param rightIndex  is right element index
+     * @param leftArray   is a left sub-array
+     * @param rightArray  is a right sub-array
+     * @param leftLength  is left sub-array length
+     * @param rightLength is right sub-array length
      */
-    private void merge(final int[] array, int leftIndex, int middleIndex, int rightIndex) {
-        // creates temp arrays for the sub-arrays
-        int[] leftArray = Arrays.copyOfRange(array, leftIndex, middleIndex);
-        int[] rightArray = Arrays.copyOfRange(array, middleIndex + 1, rightIndex);
-
+    private void merge(final int[] array, final int[] leftArray, final int[] rightArray, final int leftLength, final int rightLength) {
         // merge sub-arrays
         // indexes
         int i = 0;
         int j = 0;
-        int k = leftIndex;
-        while (i < leftArray.length && j < rightArray.length) {
+        int k = 0;
+        while (i < leftLength && j < rightLength) {
             if (leftArray[i] <= rightArray[j]) {
-                array[k] = leftArray[i];
-                i++;
+                array[k++] = leftArray[i++];
             } else {
-                array[k] = rightArray[j];
-                j++;
+                array[k++] = rightArray[j++];
             }
-            k++;
         }
 
-        while (i < rightArray.length) {
-            array[k] = leftArray[i];
-            i++;
-            k++;
+        while (i < leftArray.length) {
+            array[k++] = leftArray[i++];
         }
 
-        while (j < leftArray.length) {
-            array[k] = rightArray[j];
-            j++;
-            k++;
+        while (j < rightArray.length) {
+            array[k++] = rightArray[j++];
         }
     }
 
     /**
-     * @param array      is incoming array
-     * @param leftIndex  is left index of sub-array
-     * @param rightIndex is right index of sub-array
+     * @param array is incoming array
      */
-    private void sort(int[] array, int leftIndex, int rightIndex) {
-        if (leftIndex < rightIndex) {
-            int middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
-            sort(array, leftIndex, middleIndex);
-            sort(array, middleIndex + 1, rightIndex);
-
-            merge(array, leftIndex, middleIndex, rightIndex);
+    private void sort(int[] array) {
+        int length = array.length;
+        if (length < 2) {
+            return;
         }
+
+        // calculate middle index
+        int middleIndex = length / 2;
+        // creates temp arrays for the sub-arrays
+        int[] leftArray = new int[middleIndex];
+        int[] rightArray = new int[length - middleIndex];
+
+        // populate it
+        System.arraycopy(array, 0, leftArray, 0, middleIndex);
+
+        if (length - middleIndex >= 0) System.arraycopy(array, middleIndex, rightArray,
+                0, length - middleIndex);
+
+        // sort sub-arrays
+        sort(leftArray);
+        sort(rightArray);
+
+        //merge them
+        merge(array, leftArray, rightArray, middleIndex, length - middleIndex);
     }
 
 }
